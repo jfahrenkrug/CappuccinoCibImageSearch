@@ -8,6 +8,7 @@
     CPTableView tableView;
     CPImageView imageView;
     CPArray images;
+    CPData receivedData;
 }
 
 - (void)applicationDidFinishLaunching:(CPNotification)aNotification
