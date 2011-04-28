@@ -57,8 +57,10 @@
 {
     var images = [[CPArray alloc] init];
     
-    if (someJSONObjects) {
-        for (var i=0; i < someJSONObjects.length; i++) {
+    if (someJSONObjects) 
+    {
+        for (var i=0; i < someJSONObjects.length; i++) 
+        {
             var image = [[GoogleImage alloc] initFromJSONObject:someJSONObjects[i]];
             [images addObject:image];
         };

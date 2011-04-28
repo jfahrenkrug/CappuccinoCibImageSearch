@@ -3,10 +3,10 @@
 
 @implementation AppController : CPObject
 {
-    CPWindow    theWindow; //this "outlet" is connected automatically by the Cib
-    CPTextField textField;
-    CPTableView tableView;
-    CPImageView imageView;
+    @outlet CPWindow    theWindow; //this "outlet" is connected automatically by the Cib
+    @outlet CPTextField textField;
+    @outlet CPTableView tableView;
+    @outlet CPImageView imageView;
     CPArray images;
     CPData receivedData;
 }
@@ -21,15 +21,18 @@
     [theWindow setFullBridge:YES];
 }
 
-- (void)search:(id)sender {
+- (IBAction)search:(id)sender {
     var term = [textField stringValue];
-    if (term && [term length] > 0) {
+    if (term && [term length] > 0) 
+    {
         var request = [CPURLRequest requestWithURL:'http://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=large&imgtype=photo&q=' + term];
         [request setHTTPMethod:@"GET"];
 
         receivedData = nil;
         [CPURLConnection connectionWithRequest:request delegate:self];
-    } else {
+    } 
+    else 
+    {
         alert("Please enter a search term!");
     }
 }
@@ -38,11 +41,10 @@
  
 - (void)connection:(CPURLConnection)connection didReceiveData:(CPString)data
 {
-    if (!receivedData) {
+    if (!receivedData)
         receivedData = data;
-    } else {
+    else
         receivedData += data;
-    }
 }
  
 - (void)connection:(CPURLConnection)connection didFailWithError:(CPString)error
@@ -55,20 +57,23 @@
 {
     var result = nil;
     
-    try {
+    try 
+    {
         result = CPJSObjectCreateWithJSON(receivedData).responseData.results;
-    } catch(err) {
+    } 
+    catch(err) 
+    {
         alert("Error while parsing search results: " + err);
     }
     
-    if (result) {
+    if (result) 
+    {
         images = [GoogleImage imagesFromJSONObjects:result]
-        console.log(images);
-        if (images) {
+        //console.log(images);
+        if (images)
           [tableView reloadData];
-        } else {
+        else
             alert("Nothing found.");
-        }
     }
 }
 
@@ -86,7 +91,7 @@
 }
 
 /* CPTableViewDelegate methods */
--(void) tableViewSelectionDidChange:(CPNotification)note
+- (void)tableViewSelectionDidChange:(CPNotification)note
 {
     var image = [images objectAtIndex:[tableView selectedRow]];
     [imageView setImage:[[CPImage alloc] initWithContentsOfFile:[image unescapedUrl]]];

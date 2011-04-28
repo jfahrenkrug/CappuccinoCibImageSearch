@@ -1,0 +1,2 @@
+A Cappuccino sample application that displays a textfield and a table on the left and an image view on the right: You can search the Google Image Search API for images, the results are shown in the table and the selected result image is displayed in the image view on the right.
+The UI is created with Xcode (IB).
